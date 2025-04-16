@@ -3,9 +3,7 @@ package com.example.weeklyrest2.controller;
 import com.example.weeklyrest2.domain.Comment;
 import com.example.weeklyrest2.dto.AddCommentRequest;
 import com.example.weeklyrest2.dto.CommentResponse;
-import com.example.weeklyrest2.dto.UpdateCommentRequest;
 import com.example.weeklyrest2.service.CommentService;
-import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +31,7 @@ public class CommentController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(response.toDto());
+                .body(new CommentResponse(response));
     }
 
     // 2. commentId 댓글 정보 조회
@@ -41,16 +39,16 @@ public class CommentController {
     public ResponseEntity<CommentResponse> findCommentById(@PathVariable Long commentId) {
         Comment comment = commentService.findCommentById(commentId);
 
-        return ResponseEntity.ok(comment.toDto());
+        return ResponseEntity.ok(new CommentResponse(comment));
     }
 
     // 3. commentId 댓글 정보 수정
     @PutMapping("/api/comments/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable Long commentId,
-                                                         @RequestBody UpdateCommentRequest request) {
+                                                         @RequestBody AddCommentRequest request) {
         Comment comment = commentService.updateComment(commentId, request);
 
-        return ResponseEntity.ok(comment.toDto());
+        return ResponseEntity.ok(new CommentResponse(comment));
     }
 
     // 4. commentId 댓글 삭제
@@ -58,6 +56,6 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();  // 성공이지만 내용이 없음(204)
     }
 }

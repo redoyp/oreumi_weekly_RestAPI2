@@ -1,7 +1,6 @@
 package com.example.weeklyrest2.domain;
 
-import com.example.weeklyrest2.dto.CommentResponse;
-import com.example.weeklyrest2.dto.CommentResponseForArticle;
+import com.example.weeklyrest2.dto.CommentNoArticleResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -41,15 +40,8 @@ public class Comment {
         this.body = body;
     }
 
-    public CommentResponse toDto() {
-        return new CommentResponse(id, article.getId(), body, createdAt, article.toDto());
-    }
-
-    public CommentResponseForArticle toDtoForArticle() {
-        return new CommentResponseForArticle(id, article.getId(), body, createdAt);
-    }
-
-    public void update(String body) {
+    public Comment updateBody(String body) {
         this.body = body;
+        return this;
     }
 }

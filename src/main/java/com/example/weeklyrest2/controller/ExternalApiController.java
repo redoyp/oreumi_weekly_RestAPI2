@@ -13,11 +13,11 @@ public class ExternalApiController {
         this.externalService = externalService;
     }
 
-    @GetMapping("/api/external")
-    public ResponseEntity<String> callExternal() {
+    @GetMapping("/api/external/articles")
+    public ResponseEntity<String> externalArticle() {
         // RestTemplate
-        externalService.call();
+        externalService.saveArticles();
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("외부 article 저장");
     }
 }

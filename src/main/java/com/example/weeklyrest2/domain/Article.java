@@ -1,9 +1,8 @@
 package com.example.weeklyrest2.domain;
 
 import com.example.weeklyrest2.dto.ArticleResponse;
-import com.example.weeklyrest2.dto.ArticleResponseWithComments;
-import com.example.weeklyrest2.dto.CommentResponse;
-import com.example.weeklyrest2.dto.CommentResponseForArticle;
+import com.example.weeklyrest2.dto.ArticleCommentResponse;
+import com.example.weeklyrest2.dto.CommentNoArticleResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -61,10 +60,6 @@ public class Article {
     }
 
     public ArticleResponse toDto() {
-        return new ArticleResponse(id, title, content, createdAt, updatedAt);
-    }
-
-    public ArticleResponseWithComments toDto(List<CommentResponseForArticle> comments) {
-        return new ArticleResponseWithComments(id, title, content, createdAt, updatedAt, comments);
+        return new ArticleResponse(this);
     }
 }

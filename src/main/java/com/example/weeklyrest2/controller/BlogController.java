@@ -1,11 +1,9 @@
 package com.example.weeklyrest2.controller;
 
 import com.example.weeklyrest2.domain.Article;
-import com.example.weeklyrest2.domain.Comment;
 import com.example.weeklyrest2.dto.AddArticleRequest;
 import com.example.weeklyrest2.dto.ArticleResponse;
-import com.example.weeklyrest2.dto.ArticleResponseWithComments;
-import com.example.weeklyrest2.dto.CommentResponse;
+import com.example.weeklyrest2.dto.ArticleCommentResponse;
 import com.example.weeklyrest2.dto.UpdateArticleRequest;
 import com.example.weeklyrest2.service.BlogService;
 import java.util.List;
@@ -100,10 +98,12 @@ public class BlogController {
         return e.getMessage();
     }
 
+
     // 5. 게시글과 댓글 정보 한 번에 조회
     @GetMapping("/api/articles/{articleId}/comments")
-    public ResponseEntity<ArticleResponseWithComments> findComments(@PathVariable Long articleId) {
-        ArticleResponseWithComments response = blogService.getArticleComments(articleId);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ArticleCommentResponse> findArticleWithComment(@PathVariable Long articleId) {
+        Article article = blogService.findArticleById(articleId);
+
+        return ResponseEntity.ok(new ArticleCommentResponse(article));
     }
 }

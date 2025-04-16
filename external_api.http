@@ -1,0 +1,2 @@
+### 외부 article api 출력
+GET http://localhost:8080/api/external/articles

@@ -1,17 +1,11 @@
 package com.example.weeklyrest2.service;
 
 import com.example.weeklyrest2.domain.Article;
-import com.example.weeklyrest2.domain.Comment;
 import com.example.weeklyrest2.dto.AddArticleRequest;
-import com.example.weeklyrest2.dto.ArticleResponse;
-import com.example.weeklyrest2.dto.ArticleResponseWithComments;
-import com.example.weeklyrest2.dto.CommentResponse;
-import com.example.weeklyrest2.dto.CommentResponseForArticle;
 import com.example.weeklyrest2.dto.UpdateArticleRequest;
 import com.example.weeklyrest2.repository.BlogRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,13 +53,14 @@ public class BlogService {
         return article;
     }
 
-    // 5. 게시글과 댓글 정보를 한 번에 조회
-    public ArticleResponseWithComments getArticleComments(Long articleId) {
-        Article article = blogRepository.findById(articleId)
-                .orElseThrow(() -> new NoSuchElementException("해당하는 글 없음"));
-
-        List<CommentResponseForArticle> responses = commentService.getAllCommentsByArticleId(articleId);
-        return article.toDto(responses);
-    }
+    // Controller 에서 바로 호출
+//    // 5. 게시글과 댓글 정보를 한 번에 조회
+//    public ArticleResponseWithComments getArticleComments(Long articleId) {
+//        Article article = blogRepository.findById(articleId)
+//                .orElseThrow(() -> new NoSuchElementException("해당하는 글 없음"));
+//
+//        List<CommentResponseForArticle> responses = commentService.getAllCommentsByArticleId(articleId);
+//        return article.toDto(responses);
+//    }
 
 }
